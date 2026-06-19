@@ -1,0 +1,5 @@
+nvidia:
+
+nvidia/custom:
+  collection_interval: 30s
+  binary_path: /opt/nvidia/bin/nvidia-smi

@@ -1,0 +1,113 @@
+resourceMetrics:
+  - resource:
+      attributes:
+        - key: nvidia.gpu.index
+          value:
+            stringValue: "0"
+        - key: nvidia.gpu.name
+          value:
+            stringValue: NVIDIA A100-SXM4-40GB
+        - key: nvidia.gpu.uuid
+          value:
+            stringValue: GPU-aaaaaaaa-1111-2222-3333-444444444444
+    scopeMetrics:
+      - metrics:
+          - description: GPU memory currently free (unused).
+            gauge:
+              dataPoints:
+                - asInt: "34359738368"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.free
+            unit: By
+          - description: Total installed GPU memory.
+            gauge:
+              dataPoints:
+                - asInt: "42949672960"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.total
+            unit: By
+          - description: GPU memory currently in use.
+            gauge:
+              dataPoints:
+                - asInt: "8589934592"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.used
+            unit: By
+          - description: GPU memory in use as a percentage of the total GPU memory (used / total * 100).
+            gauge:
+              dataPoints:
+                - asDouble: 20
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.utilization
+            unit: '%'
+          - description: Percent of time over the sample period during which one or more kernels were executing on the GPU.
+            gauge:
+              dataPoints:
+                - asDouble: 42
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.utilization
+            unit: '%'
+        scope:
+          name: github.com/pierre-prevoteau/otel-receiver-nvidia/nvidiareceiver
+          version: latest
+  - resource:
+      attributes:
+        - key: nvidia.gpu.index
+          value:
+            stringValue: "1"
+        - key: nvidia.gpu.name
+          value:
+            stringValue: NVIDIA A100-SXM4-40GB
+        - key: nvidia.gpu.uuid
+          value:
+            stringValue: GPU-bbbbbbbb-5555-6666-7777-888888888888
+    scopeMetrics:
+      - metrics:
+          - description: GPU memory currently free (unused).
+            gauge:
+              dataPoints:
+                - asInt: "42949672960"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.free
+            unit: By
+          - description: Total installed GPU memory.
+            gauge:
+              dataPoints:
+                - asInt: "42949672960"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.total
+            unit: By
+          - description: GPU memory currently in use.
+            gauge:
+              dataPoints:
+                - asInt: "0"
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.used
+            unit: By
+          - description: GPU memory in use as a percentage of the total GPU memory (used / total * 100).
+            gauge:
+              dataPoints:
+                - asDouble: 0
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.memory.utilization
+            unit: '%'
+          - description: Percent of time over the sample period during which one or more kernels were executing on the GPU.
+            gauge:
+              dataPoints:
+                - asDouble: 0
+                  startTimeUnixNano: "1000000"
+                  timeUnixNano: "2000000"
+            name: nvidia.gpu.utilization
+            unit: '%'
+        scope:
+          name: github.com/pierre-prevoteau/otel-receiver-nvidia/nvidiareceiver
+          version: latest

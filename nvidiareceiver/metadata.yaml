@@ -1,0 +1,71 @@
+type: nvidia
+display_name: NVIDIA GPU Receiver
+
+description: The NVIDIA GPU receiver collects GPU utilization and memory metrics for locally installed NVIDIA GPUs by running the nvidia-smi command line tool.
+
+status:
+  class: receiver
+  stability:
+    alpha: [metrics]
+  distributions: []
+  codeowners:
+    active: [pierre-prevoteau]
+  unsupported_platforms: [darwin]
+
+resource_attributes:
+  nvidia.gpu.index:
+    description: Zero-based index of the GPU as reported by nvidia-smi.
+    type: string
+    enabled: true
+  nvidia.gpu.name:
+    description: Product name (model) of the GPU.
+    type: string
+    enabled: true
+  nvidia.gpu.uuid:
+    description: Globally unique, immutable identifier of the GPU.
+    type: string
+    enabled: true
+
+metrics:
+  nvidia.gpu.memory.free:
+    description: GPU memory currently free (unused).
+    enabled: true
+    stability: alpha
+    unit: By
+    gauge:
+      value_type: int
+
+  nvidia.gpu.memory.total:
+    description: Total installed GPU memory.
+    enabled: true
+    stability: alpha
+    unit: By
+    gauge:
+      value_type: int
+
+  nvidia.gpu.memory.used:
+    description: GPU memory currently in use.
+    enabled: true
+    stability: alpha
+    unit: By
+    gauge:
+      value_type: int
+
+  nvidia.gpu.memory.utilization:
+    description: GPU memory in use as a percentage of the total GPU memory (used / total * 100).
+    enabled: true
+    stability: alpha
+    unit: "%"
+    gauge:
+      value_type: double
+
+  nvidia.gpu.utilization:
+    description: Percent of time over the sample period during which one or more kernels were executing on the GPU.
+    enabled: true
+    stability: alpha
+    unit: "%"
+    gauge:
+      value_type: double
+
+tests:
+  config:

@@ -1,0 +1,86 @@
+default:
+all_set:
+  metrics:
+    nvidia.gpu.memory.free:
+      enabled: true
+    nvidia.gpu.memory.total:
+      enabled: true
+    nvidia.gpu.memory.used:
+      enabled: true
+    nvidia.gpu.memory.utilization:
+      enabled: true
+    nvidia.gpu.utilization:
+      enabled: true
+  resource_attributes:
+    nvidia.gpu.index:
+      enabled: true
+    nvidia.gpu.name:
+      enabled: true
+    nvidia.gpu.uuid:
+      enabled: true
+reaggregate_set:
+  metrics:
+    nvidia.gpu.memory.free:
+      enabled: true
+    nvidia.gpu.memory.total:
+      enabled: true
+    nvidia.gpu.memory.used:
+      enabled: true
+    nvidia.gpu.memory.utilization:
+      enabled: true
+    nvidia.gpu.utilization:
+      enabled: true
+  resource_attributes:
+    nvidia.gpu.index:
+      enabled: true
+    nvidia.gpu.name:
+      enabled: true
+    nvidia.gpu.uuid:
+      enabled: true
+none_set:
+  metrics:
+    nvidia.gpu.memory.free:
+      enabled: false
+    nvidia.gpu.memory.total:
+      enabled: false
+    nvidia.gpu.memory.used:
+      enabled: false
+    nvidia.gpu.memory.utilization:
+      enabled: false
+    nvidia.gpu.utilization:
+      enabled: false
+  resource_attributes:
+    nvidia.gpu.index:
+      enabled: false
+    nvidia.gpu.name:
+      enabled: false
+    nvidia.gpu.uuid:
+      enabled: false
+filter_set_include:
+  resource_attributes:
+    nvidia.gpu.index:
+      enabled: true
+      metrics_include:
+        - regexp: ".*"
+    nvidia.gpu.name:
+      enabled: true
+      metrics_include:
+        - regexp: ".*"
+    nvidia.gpu.uuid:
+      enabled: true
+      metrics_include:
+        - regexp: ".*"
+filter_set_exclude:
+  resource_attributes:
+    nvidia.gpu.index:
+      enabled: true
+      metrics_exclude:
+        - strict: "nvidia.gpu.index-val"
+    nvidia.gpu.name:
+      enabled: true
+      metrics_exclude:
+        - strict: "nvidia.gpu.name-val"
+    nvidia.gpu.uuid:
+      enabled: true
+      metrics_exclude:
+        - strict: "nvidia.gpu.uuid-val"

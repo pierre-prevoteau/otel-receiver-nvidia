@@ -1,0 +1,22 @@
+# Sample runtime configuration for a collector built with examples/builder-config.yaml.
+#
+# Run with:
+#   ./otelcol-nvidia/otelcol-nvidia --config examples/otelcol.yaml
+receivers:
+  nvidia:
+    collection_interval: 30s
+    # binary_path: /usr/bin/nvidia-smi   # uncomment if nvidia-smi is not on PATH
+
+processors:
+  batch:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    metrics:
+      receivers: [nvidia]
+      processors: [batch]
+      exporters: [debug]
