@@ -18,25 +18,6 @@ all_set:
       enabled: true
     nvidia.gpu.uuid:
       enabled: true
-reaggregate_set:
-  metrics:
-    nvidia.gpu.memory.free:
-      enabled: true
-    nvidia.gpu.memory.total:
-      enabled: true
-    nvidia.gpu.memory.used:
-      enabled: true
-    nvidia.gpu.memory.utilization:
-      enabled: true
-    nvidia.gpu.utilization:
-      enabled: true
-  resource_attributes:
-    nvidia.gpu.index:
-      enabled: true
-    nvidia.gpu.name:
-      enabled: true
-    nvidia.gpu.uuid:
-      enabled: true
 none_set:
   metrics:
     nvidia.gpu.memory.free:

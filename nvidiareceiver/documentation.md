@@ -54,8 +54,8 @@ Percent of time over the sample period during which one or more kernels were exe
 
 ## Resource Attributes
 
-| Name | Description | Values | Enabled | Semantic Convention |
-| ---- | ----------- | ------ | ------- | ------------------- |
-| nvidia.gpu.index | Zero-based index of the GPU as reported by nvidia-smi. | Any Str | true | - |
-| nvidia.gpu.name | Product name (model) of the GPU. | Any Str | true | - |
-| nvidia.gpu.uuid | Globally unique, immutable identifier of the GPU. | Any Str | true | - |
+| Name | Description | Values | Enabled | Semantic Convention | Stability |
+| ---- | ----------- | ------ | ------- | ------------------- | --------- |
+| nvidia.gpu.index | Zero-based index of the GPU as reported by nvidia-smi. | Any Str | true | - | - |
+| nvidia.gpu.name | Product name (model) of the GPU. | Any Str | true | - | - |
+| nvidia.gpu.uuid | Globally unique, immutable identifier of the GPU. | Any Str | true | - | - |

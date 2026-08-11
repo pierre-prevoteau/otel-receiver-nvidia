@@ -1,6 +1,6 @@
 # Makefile for the NVIDIA GPU OpenTelemetry receiver.
 
-MDATAGEN_VERSION ?= v0.154.0
+MDATAGEN_VERSION ?= v0.158.0
 TOOLS_DIR := $(CURDIR)/.tools/mdatagen
 METADATA := $(CURDIR)/nvidiareceiver/metadata.yaml
 
