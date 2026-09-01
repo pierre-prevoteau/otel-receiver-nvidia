@@ -33,6 +33,13 @@ golden:
 build:
 	go build ./...
 
+# The Windows specific code paths cannot run from a Linux or macOS test run, so
+# at least type-check them (go vet builds the test files too).
+.PHONY: build-cross
+build-cross:
+	GOOS=linux GOARCH=amd64 go vet ./...
+	GOOS=windows GOARCH=amd64 go vet ./...
+
 .PHONY: tidy
 tidy:
 	go mod tidy

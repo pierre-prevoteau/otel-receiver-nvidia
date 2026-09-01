@@ -8,11 +8,13 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/golden"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/pdatatest/pmetrictest"
 	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/collector/pdata/pmetric"
 	"go.opentelemetry.io/collector/receiver/receivertest"
 
 	"github.com/pierre-prevoteau/otel-receiver-nvidia/nvidiareceiver/internal/metadata"
@@ -22,6 +24,8 @@ import (
 // the current scrape output. Run `WRITE_GOLDEN=true go test ./...` to refresh
 // the testdata after intentionally changing the emitted metrics.
 var writeGolden = os.Getenv("WRITE_GOLDEN") == "true"
+
+var expectedMetricsFile = filepath.Join("testdata", "expected_metrics.yaml")
 
 // sampleOutput mimics `nvidia-smi --query-gpu=index,uuid,name,utilization.gpu,
 // memory.total,memory.used,memory.free --format=csv,noheader,nounits` for a host
@@ -43,18 +47,10 @@ func newTestScraper(t *testing.T, output string, runErr error) *nvidiaScraper {
 	return s
 }
 
-func TestScrape(t *testing.T) {
-	s := newTestScraper(t, sampleOutput, nil)
+func requireMatchesGolden(t *testing.T, actual pmetric.Metrics) {
+	t.Helper()
 
-	actual, err := s.scrape(context.Background())
-	require.NoError(t, err)
-
-	expectedFile := filepath.Join("testdata", "expected_metrics.yaml")
-	if writeGolden {
-		require.NoError(t, golden.WriteMetrics(t, expectedFile, actual))
-	}
-
-	expected, err := golden.ReadMetrics(expectedFile)
+	expected, err := golden.ReadMetrics(expectedMetricsFile)
 	require.NoError(t, err)
 
 	require.NoError(t, pmetrictest.CompareMetrics(expected, actual,
@@ -63,6 +59,29 @@ func TestScrape(t *testing.T) {
 		pmetrictest.IgnoreResourceMetricsOrder(),
 		pmetrictest.IgnoreMetricsOrder(),
 	))
+}
+
+func TestScrape(t *testing.T) {
+	s := newTestScraper(t, sampleOutput, nil)
+
+	actual, err := s.scrape(context.Background())
+	require.NoError(t, err)
+
+	if writeGolden {
+		require.NoError(t, golden.WriteMetrics(t, expectedMetricsFile, actual))
+	}
+
+	requireMatchesGolden(t, actual)
+}
+
+// nvidia-smi terminates rows with CRLF on Windows.
+func TestScrapeCRLFOutput(t *testing.T) {
+	s := newTestScraper(t, strings.ReplaceAll(sampleOutput, "\n", "\r\n"), nil)
+
+	actual, err := s.scrape(context.Background())
+	require.NoError(t, err)
+
+	requireMatchesGolden(t, actual)
 }
 
 func TestScrapeCommandError(t *testing.T) {

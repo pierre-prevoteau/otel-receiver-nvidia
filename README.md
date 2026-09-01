@@ -1,6 +1,6 @@
 # otel-receiver-nvidia
 
-An [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) **metrics receiver** for NVIDIA GPUs on Linux hosts. It runs the `nvidia-smi` command line tool on a configurable interval and turns the result into OpenTelemetry metrics, one set per GPU.
+An [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) **metrics receiver** for NVIDIA GPUs on Linux and Windows hosts. It runs the `nvidia-smi` command line tool on a configurable interval and turns the result into OpenTelemetry metrics, one set per GPU.
 
 This repository is meant to be compiled into your own Collector distribution with the [OpenTelemetry Collector Builder (OCB)](https://opentelemetry.io/docs/collector/custom-collector/) — see [Building a custom collector](#building-a-custom-collector-with-ocb) below.
 
@@ -21,8 +21,8 @@ Full receiver documentation: [`nvidiareceiver/README.md`](./nvidiareceiver/READM
 ## Requirements
 
 - An NVIDIA GPU with the NVIDIA driver installed.
-- `nvidia-smi` available on the Collector host's `PATH` (or set `binary_path`).
-- Linux (the component is not supported on macOS).
+- `nvidia-smi` available on the Collector host's `PATH` (or set `binary_path`). On Windows the standard driver install directories are searched as well, so `nvidia-smi.exe` is normally found without any configuration.
+- Linux or Windows (the component is not supported on macOS).
 
 ## Repository layout
 

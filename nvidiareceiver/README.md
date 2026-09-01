@@ -27,7 +27,14 @@ nvidia.gpu.memory.free{nvidia.gpu.index="0", ...}                               
 
 GPU memory is reported by `nvidia-smi` in MiB and converted to bytes (`MiB * 1024 * 1024`). `nvidia.gpu.memory.utilization` is derived as `memory.used / memory.total * 100`.
 
-`nvidia-smi` must be installed and resolvable on the collector's `PATH` (or referenced explicitly through `binary_path`). The receiver targets Linux hosts with NVIDIA GPUs and is not supported on macOS.
+`nvidia-smi` must be installed and resolvable on the collector's `PATH` (or referenced explicitly through `binary_path`). The receiver runs on Linux and Windows hosts with NVIDIA GPUs and is not supported on macOS.
+
+On Windows the bare name `nvidia-smi` resolves to `nvidia-smi.exe` through `PATHEXT`, and when it is absent from the `PATH` — which happens with the restricted environment a Windows service inherits — the driver install directories are searched as a fallback:
+
+- `%SystemRoot%\System32` (current drivers)
+- `%ProgramFiles%\NVIDIA Corporation\NVSMI` (older drivers), plus the `%ProgramW6432%` and `%ProgramFiles(x86)%` equivalents
+
+The subprocess is started with `CREATE_NO_WINDOW` so that scrapes do not flash a console window in interactive sessions.
 
 ## Configuration
 
@@ -35,7 +42,7 @@ GPU memory is reported by `nvidia-smi` in MiB and converted to bytes (`MiB * 102
 | --------------------- | ------------ | -------------------------------------------------------------------------------- |
 | `collection_interval` | `60s`        | How often `nvidia-smi` is invoked and metrics are produced.                      |
 | `initial_delay`       | `1s`         | Time to wait before the first scrape.                                            |
-| `binary_path`         | `nvidia-smi` | Path to the `nvidia-smi` executable. A bare file name is resolved using `PATH`.  |
+| `binary_path`         | `nvidia-smi` | Path to the `nvidia-smi` executable. A bare file name is resolved using `PATH`, and on Windows through the driver install directories as well. |
 
 Individual metrics and resource attributes can be toggled under the `metrics` and `resource_attributes` keys. See [documentation.md](./documentation.md) for the full list of emitted metrics and resource attributes.
 
@@ -60,4 +67,12 @@ receivers:
     metrics:
       nvidia.gpu.memory.free:
         enabled: false
+```
+
+On Windows, point `binary_path` at a non-standard install with a quoted absolute path:
+
+```yaml
+receivers:
+  nvidia:
+    binary_path: 'C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi.exe'
 ```

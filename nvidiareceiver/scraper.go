@@ -60,14 +60,20 @@ func (*nvidiaScraper) shutdown(context.Context) error {
 }
 
 func (s *nvidiaScraper) execNvidiaSMI(ctx context.Context) ([]byte, error) {
-	cmd := exec.CommandContext(ctx, s.cfg.BinaryPath,
+	path, err := resolveBinaryPath(s.cfg.BinaryPath)
+	if err != nil {
+		return nil, err
+	}
+
+	cmd := exec.CommandContext(ctx, path,
 		"--query-gpu="+queryGPUFields,
 		"--format=csv,noheader,nounits",
 	)
+	hideConsoleWindow(cmd)
 
 	out, err := cmd.Output()
 	if err != nil {
-		return nil, fmt.Errorf("failed running %q: %w", s.cfg.BinaryPath, err)
+		return nil, fmt.Errorf("failed running %q: %w", path, err)
 	}
 	return out, nil
 }
